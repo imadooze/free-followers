@@ -1,378 +1,0 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>𝗔𝗹-𝗺𝘂𝗺𝗶𝗻_app</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="app">
-    <!-- الصفحة الرئيسية -->
-    <div class="page active" id="home">
-      <div class="welcome-box">
-        <h1>مرحبًا بك في تطبيق اڸــمــٶمــن</h1>
-        <p>السلام عليكم ورحمة الله وبركاته</p>
-        <p>هنا تجد زادك اليومي من الأحاديث، الأذكار، والأدعية</p>
-        <p>ارتقِ بروحك، واملأ يومك بنور الإيمان</p>
-        <p>الإصدار الحالي: v1.10.22</p>
-      </div>
-      <div class="icons-container">
-        <div class="icon yellow" onclick="showPage('hadith-page-1')">أحاديث</div>
-        <div class="icon blue" onclick="showPage('zekr-page-1')">أذكار</div>
-        <div class="icon green" onclick="showPage('doaa-page-1')">أدعية</div>
-        <div class="icon red-light" onclick="showPage('tasbeeh-page')">تسبيح</div>
-        <div class="icon yellow" onclick="showPage('settings-page')">إعدادات</div>
-      </div>
-    </div>
-
-    <!-- صفحة الإعدادات -->
-    <div class="page" id="settings-page">
-      <div class="header"><button onclick="showPage('home')">رجوع</button></div>
-      <div class="settings-page">
-        <div class="settings-action-btn-container">
-          <button class="settings-action-btn" onclick="showPage('privacy-policy-page')">شروط سياسة التطبيق</button>
-        </div>
-        <div class="settings-action-btn-container">
-          <a href="https://www.instagram.com/was_iya1?igsh=eHNzcHpwYjUzdWpo" target="_blank">
-            <button class="settings-action-btn">مساعدة</button>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- صفحة سياسة الخصوصية -->
-    <div class="page" id="privacy-policy-page">
-      <div class="header"><button onclick="showPage('settings-page')">رجوع</button></div>
-      <div class="content-box">
-        <h2>شروط سياسة التطبيق</h2>
-        <p>🌙 السلام عليكم ورحمة الله وبركاته 🌙</p>
-        <p>📚 اكتشف تطبيق 𝗔𝗹-𝗺𝘂𝗺𝗶𝗻 </p>
-        <p>دائمًا في حاجة لرفيق يعينك على ذكرك وعبادتك؟</p>
-        <p>مع تطبيق 𝗔𝗹-𝗺𝘂𝗺𝗶𝗻، استمتع بتجربة مميزة وشاملة تحتوي على:
-</p>
-        <p>🌿 أذكار وأدعية يومية</p>
-        <p>📖 أحاديث نبويّة صحيحة</p>
-        <p>🕌 محتوى إسلامي موثوق</p>
-        <p>⏰ تنبيهات تذكيرية لتسبيحك وأذكارك</p>
-        <p>تصميم بسيط يناسب جميع الأعمار
-</p>
-        <p>ابدأ رحلتك الدينية مع 𝗔𝗹-𝗺𝘂𝗺𝗶𝗻 الآن!</p>
-        <p>المطور: Zelbouni Imad</p>
-      </div>
-    </div>
-
-    <!-- صفحة التسبيح -->
-<div class="page" id="tasbeeh-page">
-  <div class="header"><button onclick="showPage('home')">رجوع</button></div>
-  <div class="content-box">
-    <div class="tasbeeh-frame">
-      <p><span class="tasbeeh-word">سبحان الله</span> 📿</p>
-      <div id="tasbeehCount">0</div>
-      <button class="tasbeeh-button" onclick="incrementTasbeeh()">تسبيح</button>
-      <button class="tasbeeh-button" onclick="resetTasbeeh()">إعادة احتساب 🔄</button>
-    </div>
-  </div>
-</div>
-
-    <!-- صفحات الأحاديث -->
-    <div class="page" id="hadith-page-1">
-      <div class="header"><button onclick="showPage('home')">رجوع</button></div>
-      <div class="content-box">
-        <!-- إضافة 3 أحاديث هنا -->
-        <div class="hadith-frame">
-          <p>عن عمر بن الخطاب رضي الله عنه قال: "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى."
-
-المصدر: صحيح البخاري</p>
-        </div>
-        <div class="hadith-frame">
-          <p> عن عبد الله بن مسعود رضي الله عنه قال: "من لا يشكر الناس لا يشكر الله."
-
-المصدر: صحيح الترمذي (195</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن تميم الداري رضي الله عنه قال: "الدين النصيحة."
-
-المصدر: صحيح مسلم</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('hadith-page-2')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="hadith-page-2">
-      <div class="header"><button onclick="showPage('hadith-page-1')">رجوع</button></div>
-      <div class="content-box">
-        <div class="hadith-frame">
-          <p>عن أنس بن مالك رضي الله عنه قال: "اطلبوا العلم من المهد إلى اللحد."
-
-المصدر: حديث حسن، رواه ابن عبد البر في "جامع بيان العلم وفضله"</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن عبد الله بن عمر رضي الله عنه قال: "من لا يُؤثِر الناس لا يُؤثِره الله."
-
-المصدر: صحيح البخاري</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن عثمان بن عفان رضي الله عنه قال: "خيركم من تعلم القرآن وعلمه."
-
-المصدر: صحيح البخاري</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('hadith-page-3')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="hadith-page-3">
-      <div class="header"><button onclick="showPage('hadith-page-2')">رجوع</button></div>
-      <div class="content-box">
-        <div class="hadith-frame">
-          <p>عن أبي هريرة رضي الله عنه قال: "إذا مات ابن آدم انقطع عمله إلا من ثلاث: صدقة جارية أو علم ينتفع به أو ولد صالح يدعو له."
-
-المصدر: صحيح مسلم</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن أبي هريرة رضي الله عنه قال: "من صام رمضان إيمانًا واحتسابًا غفر له ما تقدم من ذنبه."
-
-المصدر: صحيح البخاري</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن أنس بن مالك رضي الله عنه قال: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه."
-
-المصدر: صحيح البخاري</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('hadith-page-4')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="hadith-page-4">
-      <div class="header"><button onclick="showPage('hadith-page-3')">رجوع</button></div>
-      <div class="content-box">
-        <div class="hadith-frame">
-          <p>عن عبد الله بن مسعود رضي الله عنه قال: "اللهم إني أعوذ بك من علم لا ينفع."
-
-
-
-المصدر: صحيح مسلم</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن أبي هريرة رضي الله عنه قال: "من سلك طريقًا يلتمس فيه علمًا سهل الله له به طريقًا إلى الجنة."
-
-
-
-المصدر: صحيح مسلم</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن أبي هريرة رضي الله عنه قال: "الطهور شطر الإيمان."
-
-
-
-المصدر: صحيح مسلم</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('hadith-page-1')">رجوع</button>
-      </div>
-    </div>
-
-    <!-- صفحات الأذكار -->
-    <div class="page" id="zekr-page-1">
-      <div class="header"><button onclick="showPage('home')">رجوع</button></div>
-      <div class="content-box">
-        <div class="zekr-frame">
-          <p>"سبحان الله عدد ما خلق في السماء، سبحان الله عدد ما خلق في الأرض، سبحان الله عدد ما بينهما."
-</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم إني أعوذ بك من شر ما عملت ومن شر ما لم أعمل."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"لا حول ولا قوة إلا بالله."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('zekr-page-2')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="zekr-page-2">
-      <div class="header"><button onclick="showPage('zekr-page-1')">رجوع</button></div>
-      <div class="content-box">
-        <div class="zekr-frame">
-          <p>"اللهم إني أعوذ بك من علم لا ينفع، وقلب لا يخشع، ودعاء لا يُستجاب."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك المصير."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم اجعلنا من الذين يسيرون على صراطك المستقيم."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('zekr-page-3')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="zekr-page-3">
-      <div class="header"><button onclick="showPage('zekr-page-2')">رجوع</button></div>
-      <div class="content-box">
-        <div class="zekr-frame">
-          <p>"سبحان الله وبحمده، سبحان الله العظيم."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>اللهم إني أسالك من فضلك ورحمتك."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('zekr-page-4')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="zekr-page-4">
-      <div class="header"><button onclick="showPage('zekr-page-3')">رجوع</button></div>
-      <div class="content-box">
-        <div class="zekr-frame">
-          <p>"لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."
-</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم صل وسلم على نبينا محمد."</p>
-        </div>
-        <div class="zekr-frame">
-          <p> ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار."
-</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('zekr-page-1')">رجوع</button>
-      </div>
-    </div>
-
-    <!-- صفحات الأدعية -->
-    <div class="page" id="doaa-page-1">
-      <div class="header"><button onclick="showPage('home')">رجوع</button></div>
-      <div class="content-box">
-        <div class="doaa-frame">
-          <p>دعاء للهدى:
-
-"اللهم إني أسالك الهُدى والتُقى والعفاف والغنى."</p>
-        </div>
-        <div class="doaa-frame">
-          <p>دعاء لتفريج الهموم:
-
-"اللهم إني عبدك ابن عبدك، ناصيتي بيدك، ماضٍ في حكمك، عدلٌ في قضاؤك، أسالك بكل اسم هو لك سميت به نفسك أو علمته أحدًا من خلقك أو أنزلته في كتابك أو استأثرت به في علم الغيب عندك، أن تجعل القرآن ربيع قلبي، ونور صدري، وجلاء حزني، وذهاب همي."</p>
-        </div>
-        <div class="doaa-frame">
-          <p>دعاء التوفيق:
-
-"اللهم إني أسالك أن توفقني لما تحب وترضى، وأن تجعلني من أهل الجنة."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('doaa-page-2')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="doaa-page-2">
-      <div class="header"><button onclick="showPage('doaa-page-1')">رجوع</button></div>
-      <div class="content-box">
-        <div class="doaa-frame">
-          <p>دعاء الاستغفار:
-
-
-
-"اللهم اغفر لي ولأمي ولأبي ولمن له حق علي، ولأهل بيتي، ولأصدقائي، ولمن تحب."</p>
-        </div>
-        <div class="doaa-frame">
-          <p>دعاء الرغبة في العلم:
-
-
-
-"اللهم انفعني بما علمتني، وعلمني ما ينفعني، وزدني علمًا."</p>
-        </div>
-        <div class="doaa-frame">
-          <p>دعاء قبل النوم:
-
-
-
-"اللهم قني عذابك يوم تبعث عبادك."
-</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('doaa-page-3')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="doaa-page-3">
-      <div class="header"><button onclick="showPage('doaa-page-2')">رجوع</button></div>
-      <div class="content-box">
-        <div class="doaa-frame">
-          <p>دعاء للبركة في الوقت:
-
-"اللهم بارك لي في وقتي، ووفقني لما تحب وترضى."
-</p>
-        </div>
-        <div class="doaa-frame">
-          <p>دعاء الرزق:
-
-"اللهم إني أسالك رزقًا طيبًا وعملاً متقبلًا."</p>
-        </div>
-        <div class="doaa-frame">
-          <p>دعاء للوالدين:
-
-"رب اغفر لي ولوالدَيَّ ولمن دخل بيتي مؤمنًا وللمؤمنين والمؤمنات."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('doaa-page-4')">التالي</button>
-      </div>
-    </div>
-
-    <div class="page" id="doaa-page-4">
-      <div class="header"><button onclick="showPage('doaa-page-3')">رجوع</button></div>
-      <div class="content-box">
-        <div class="doaa-frame">
-          <p>دعاء للشفاء:
-
-"اللهم رب الناس، مذهب البأس، اشفِ أنت الشافي، لا شفاء إلا شفاؤك، شفاء لا يغادر سقما."</p>
-        </div>
-        <div class="doaa-frame">
-          <p>دعاء للزواج:
-
-"اللهم ارزقني زوجًا صالحًا يعينني على دينك ودنياي."</p>
-        </div>
-        <div class="doaa-frame">
-          <p>دعاء للنجاح:
-
-"اللهم سهل لي أمرًا وأعني عليه برحمتك."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('doaa-page-1')">رجوع</button>
-      </div>
-    </div>
-  </div>
-  <script>
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-    }
-    let tasbeehCount = 0;
-    function incrementTasbeeh() {
-      tasbeehCount++;
-      document.getElementById('tasbeehCount').innerText = tasbeehCount;
-    }
-    function resetTasbeeh() {
-      tasbeehCount = 0;
-      document.getElementById('tasbeehCount').innerText = tasbeehCount;
-    }
-  </script>
-</body>
-</html>
