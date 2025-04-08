@@ -1,0 +1,271 @@
+/* الكود الكامل بعد التعديل ليتوافق مع Netlify */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  background: linear-gradient(to bottom right, #064420, #aee1f9);
+  color: #000;
+  overflow-x: hidden;
+}
+
+body.dark-mode {
+  background: #121212;
+  color: #fff;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.page {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(to bottom right, #064420, #aee1f9);
+  border: 5px solid gold;
+  border-radius: 20px;
+  box-shadow: 0 0 15px gold;
+}
+
+.page.active {
+  display: block;
+}
+
+.welcome-box {
+  background-color: #f0faff;
+  border: 3px solid gold;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px gold;
+  text-align: center;
+}
+
+.icons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.icon {
+  padding: 12px;
+  margin: 10px;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  width: 80%;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px gold;
+  border: 2px solid gold;
+  transition: all 0.3s ease;
+}
+
+.icon:hover {
+  transform: scale(1.05);
+}
+
+.yellow {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.blue {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.green {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.red-light {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.yellow:hover {
+  background-color: #f57c00;
+}
+
+.blue:hover {
+  background-color: #1976d2;
+}
+
+.green:hover {
+  background-color: #388e3c;
+}
+
+.red-light:hover {
+  background-color: #d32f2f;
+}
+
+.settings-icon-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+}
+
+.settings-icon {
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.settings-action-btn-container {
+  margin: 10px 0;
+}
+
+.settings-action-btn {
+  background-color: #00796b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.settings-action-btn:hover {
+  background-color: #004d40;
+}
+
+.hadith-frame,
+.zekr-frame,
+.doaa-frame,
+.tasbeeh-frame {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 2px solid gold;
+  box-shadow: 0 0 5px gold;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #00796b;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #004d40;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* تحسين الأيقونات في صفحة التسبيح */
+.tasbeeh-button {
+  background-color: #2196f3;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+  border: 2px solid gold;
+  box-shadow: 0 0 10px gold;
+  transition: all 0.3s ease;
+}
+
+.tasbeeh-button:hover {
+  background-color: #1976d2;
+  transform: scale(1.05);
+}
+
+.tasbeeh-frame {
+  border: 3px solid #ffeb3b;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 15px #ffeb3b;
+  background-color: #fff;
+  text-align: center;
+}
+
+.tasbeeh-word {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff9800;
+  padding: 5px 10px;
+  border: 2px solid #ff9800;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #ff9800;
+}
+
+#tasbeehCount {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #4caf50;
+}
+
+.content-box {
+  margin-top: 20px;
+}
+
+.header {
+  text-align: center;
+  font-size: 20px;
+}
+
+/* استجابة للموبايل */
+@media only screen and (max-width: 768px) {
+  .app {
+    padding: 10px;
+  }
+
+  .page {
+    padding: 15px;
+  }
+
+  .welcome-box {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .icon {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .pagination button {
+    font-size: 14px;
+  }
+}
