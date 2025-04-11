@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>زيادة متابعين انستقرام</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: #fff;
+    }
+    .centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+    .btn {
+      background-color: #ffce00;
+      color: #000;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+      box-shadow: 0 0 15px #ffce00;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      background-color: #fff;
+      color: #111;
+      box-shadow: 0 0 25px #fff;
+    }
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+    .service-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
+    }
+    .service-box:hover {
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
+    .username-input {
+      margin-top: 10px;
+    }
+    .message-box {
+      margin-top: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid #ffce00;
+      padding: 15px;
+      border-radius: 15px;
+      color: #fff;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .back-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: #ffce00;
+      color: #000;
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 999;
+    }
+    .dev-btn {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(255,255,255,0.1);
+      color: #ccc;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .info-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #ffce00;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 15px;
+    }
+    #developerPage button {
+      margin: 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="backButton" class="back-btn" style="display:none" onclick="goBack()">رجوع</div>
+<div id="devAccess" class="dev-btn" onclick="showDevLogin()">صفحة المطور</div>
+
+<div id="mainPage" class="centered">
+  <h1>مرحباً بك في موقع خدمات الأنستقرام</h1>
+  <p>احصل على متابعين، لايكات، مشاهدات ستوري حقيقية</p>
+  <button class="btn" onclick="goToLogin()">زيادة تفاعل </button>
+</div>
+
+<div id="loginPage" style="display:none">
+  <div class="centered">
+    <div class="card">
+      <h2>تسجيل الدخول</h2>
+      <input type="email" id="email" placeholder="البريد الإلكتروني">
+      <input type="password" id="password" placeholder="كلمة السر">
+      <label><input type="checkbox" id="rememberMe"> حفظ الحساب</label>
+      <button class="btn" onclick="login()">تسجيل الدخول</button>
+    </div>
+  </div>
+</div>
+
+<div id="servicesPage" style="display:none">
+  <div class="centered">
+    <h2>اختر الخدمة</h2>
+    <div class="services">
+      <div class="service-box">
+        <h3>زيادة المتابعين</h3>
+        <input class="username-input" id="userFollowers" placeholder="اسم المستخدم">
+        <select id="followersCount">
+          <option>100</option><option>200</option><option>300</option>
+        </select>
+        <button class="btn" onclick="processOrder('متابعين', 'userFollowers', 'msg1')">طلب</button>
+        <div id="msg1"></div>
+      </div>
+      <div class="service-box">
+        <h3>زيادة اللايكات</h3>
+        <input class="username-input" id="userLikes" placeholder="اسم المستخدم">
+        <select id="likesCount">
+          <option>100</option><option>200</option><option>300</option>
+        </select>
+        <button class="btn" onclick="processOrder('لايكات', 'userLikes', 'msg2')">طلب</button>
+        <div id="msg2"></div>
+      </div>
+      <div class="service-box">
+        <h3>زيادة مشاهدات الستوري</h3>
+        <input class="username-input" id="userViews" placeholder="اسم المستخدم">
+        <select id="viewsCount">
+          <option>100</option><option>200</option><option>300</option>
+        </select>
+        <button class="btn" onclick="processOrder('مشاهدات', 'userViews', 'msg3')">طلب</button>
+        <div id="msg3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- صفحة تسجيل دخول المطور -->
+<div id="developerLogin" style="display:none" class="centered">
+  <div class="card">
+    <h2>تسجيل دخول المطور</h2>
+    <input type="password" id="devPassword" placeholder="كلمة سر المطور">
+    <button class="btn" onclick="checkDevPassword()">دخول</button>
+  </div>
+</div>
+
+<!-- صفحة المطور -->
+<div id="developerPage" style="display:none">
+  <div class="centered">
+    <h2>صفحة المطور</h2>
+    <button class="btn" onclick="refreshData()">تحديث البيانات</button>
+    <button class="btn" onclick="deleteData()">حذف البيانات القديمة</button>
+    <div>
+      <h3>الطلبات</h3>
+      <div id="requests"></div>
+    </div>
+    <div>
+      <h3>الحسابات</h3>
+      <div id="accounts"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function goToLogin() {
+    showPage('loginPage');
+    const savedEmail = localStorage.getItem("savedEmail");
+    const savedPass = localStorage.getItem("savedPass");
+    if (savedEmail && savedPass) {
+      document.getElementById("email").value = savedEmail;
+      document.getElementById("password").value = savedPass;
+      document.getElementById("rememberMe").checked = true;
+    }
+  }
+
+  function goBack() {
+    showPage('mainPage');
+  }
+
+  function showPage(id) {
+    document.querySelectorAll('body > div').forEach(div => div.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+    if (id !== 'mainPage') {
+      document.getElementById("backButton").style.display = 'block';
+    } else {
+      document.getElementById("backButton").style.display = 'none';
+    }
+  }
+
+  function login() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    const remember = document.getElementById("rememberMe").checked;
+    if (email && pass) {
+      if (remember) {
+        localStorage.setItem("savedEmail", email);
+        localStorage.setItem("savedPass", pass);
+      }
+      const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+      accounts.push({ email, username: email.split('@')[0] });
+      localStorage.setItem('accounts', JSON.stringify(accounts));
+      showPage('servicesPage');
+    } else {
+      alert("يرجى إدخال البريد وكلمة السر");
+    }
+  }
+
+  function processOrder(service, userInputId, msgBoxId) {
+    const username = document.getElementById(userInputId).value;
+    if (!username) return alert("يرجى إدخال اسم المستخدم");
+    document.getElementById(msgBoxId).innerHTML = `
+      <div class="message-box">
+        <strong>الطلب قيد المراجعة</strong><br>
+        سيتم مراجعة طلبك خلال 15 دقيقة<br>
+        تأكد من: الحساب عام - صورة شخصية - بايو - 3 صور
+      </div>`;
+    const requests = JSON.parse(localStorage.getItem('requests') || '[]');
+    requests.push({ service, username, date: new Date().toLocaleString() });
+    localStorage.setItem('requests', JSON.stringify(requests));
+  }
+
+  function showDevLogin() {
+    showPage('developerLogin');
+  }
+
+  function checkDevPassword() {
+    const password = document.getElementById("devPassword").value;
+    if (password === "imu._.ze003") {
+      showPage('developerPage');
+      refreshData();
+    } else {
+      alert("كلمة السر غير صحيحة");
+    }
+  }
+
+  function refreshData() {
+    const requests = JSON.parse(localStorage.getItem('requests') || '[]');
+    const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+    document.getElementById('requests').innerHTML = requests.map(r =>
+      `<div class="info-box">${r.service} - ${r.username} - ${r.date}</div>`).join('');
+    document.getElementById('accounts').innerHTML = accounts.map(a =>
+      `<div class="info-box">الايميل: ${a.email}<br>اسم الحساب: ${a.username}</div>`).join('');
+  }
+
+  function deleteData() {
+    localStorage.removeItem('requests');
+    localStorage.removeItem('accounts');
+    localStorage.removeItem('savedEmail');
+    localStorage.removeItem('savedPass');
+    document.getElementById('requests').innerHTML = `<div class="info-box">تم حذف الطلبات.</div>`;
+    document.getElementById('accounts').innerHTML = `<div class="info-box">تم حذف الحسابات المحفوظة.</div>`;
+    alert("تم حذف كل البيانات القديمة بنجاح");
+  }
+</script>
+
+</body>
+                                           </html>
