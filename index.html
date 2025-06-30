@@ -1,1648 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>𝗔𝗹-𝗺𝘂𝗺𝗶𝗻_app</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  html, body {
-    width: 100%;
-    height: 100%;
-    font-family: 'Cairo', sans-serif;
-    direction: rtl;
-    background: linear-gradient(to bottom right, #064420, #aee1f9);
-    color: #000;
-    overflow-x: hidden;
-  }
-  body.dark-mode {
-    background: #121212;
-    color: #fff;
-  }
-
-  /* أنماط صفحة تسجيل الدخول */
-  .auth-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
-    background: linear-gradient(to bottom right, #064420, #1a5f7a);
-  }
-  .auth-box {
-    width: 100%;
-    max-width: 400px;
-    padding: 30px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    border: 3px solid gold;
-  }
-  body.dark-mode .auth-box {
-    background: #2c3e50;
-    color: #fff;
-  }
-  .auth-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #064420;
-  }
-  body.dark-mode .auth-title {
-    color: #f1c40f;
-  }
-  .auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  .auth-input {
-    padding: 12px 15px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: 'Cairo', sans-serif;
-    transition: border-color 0.3s;
-  }
-  .auth-input:focus {
-    border-color: #064420;
-    outline: none;
-  }
-  body.dark-mode .auth-input {
-    background: #34495e;
-    color: #fff;
-    border-color: #2c3e50;
-  }
-  .auth-button {
-    padding: 12px;
-    background: #064420;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-  }
-  .auth-button:hover {
-    background: #0a5c2c;
-  }
-  .auth-button:active {
-    transform: scale(0.98);
-  }
-  .auth-toggle {
-    margin-top: 15px;
-    color: #064420;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  body.dark-mode .auth-toggle {
-    color: #f1c40f;
-  }
-  .auth-error {
-    color: #e74c3c;
-    margin-top: 10px;
-    font-size: 14px;
-  }
-  .auth-success {
-    color: #2ecc71;
-    margin-top: 10px;
-    font-size: 14px;
-  }
-
-  /* باقي الأنماط الأصلية */
-  .app {
-    display: none; /* سيتم إظهاره بعد تسجيل الدخول */
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    width: 100%;
-  }
-  .page {
-    display: none;
-    width: 100%;
-    max-width: 600px;
-    min-height: calc(100vh - 40px);
-    padding: 20px;
-    background: linear-gradient(to bottom right, #064420, #1a5f7a);
-    border: 5px solid gold;
-    border-radius: 20px;
-    margin-bottom: 20px;
-  }
-  .page.active {
-    display: block;
-  }
-  .welcome-box, .content-box {
-    padding: 20px;
-    background: #fff;
-    border-radius: 15px;
-    margin-bottom: 20px;
-  }
-  .welcome-box h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  /* تحسين الأيقونات */
-  .icons-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-  }
-  .icon {
-    padding: 20px 30px;
-    font-size: 22px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    border-radius: 12px;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  .icon:active {
-    transform: scale(0.98);
-  }
-  .icon i {
-    margin-left: 10px;
-  }
-  .icon.yellow { background-color: #f1c40f; }
-  .icon.blue { background-color: #3498db; }
-  .icon.green { background-color: #2ecc71; }
-  .icon.red-light { background-color: #e74c3c; }
-  .icon.purple { background-color: #9b59b6; }
-  .icon.orange { background-color: #e67e22; }
-
-  /* تحسين العناوين والأزرار */
-  .header {
-    margin-bottom: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .header h2 {
-    flex: 1;
-    text-align: center;
-  }
-  .header button {
-    padding: 10px 15px;
-    background: #f39c12;
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  .header button:active {
-    transform: scale(0.95);
-  }
-
-  /* تحسين محتوى الصفحات */
-  .tasbeeh-frame, .hadith-frame, .zekr-frame, .doaa-frame, .prayer-times-frame, .qibla-frame {
-    background: #ecf0f1;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
-  body.dark-mode .tasbeeh-frame,
-  body.dark-mode .hadith-frame,
-  body.dark-mode .zekr-frame,
-  body.dark-mode .doaa-frame,
-  body.dark-mode .prayer-times-frame,
-  body.dark-mode .qibla-frame {
-    background: #2c3e50;
-    color: #fff;
-  }
-  .tasbeeh-word {
-    font-weight: bold;
-    color: #064420;
-  }
-  body.dark-mode .tasbeeh-word {
-    color: #f1c40f;
-  }
-  #tasbeehCount {
-    font-size: 48px;
-    font-weight: bold;
-    text-align: center;
-    margin: 15px 0;
-    color: #064420;
-  }
-  body.dark-mode #tasbeehCount {
-    color: #f1c40f;
-  }
-
-  /* تحسين أزرار التسبيح */
-  .tasbeeh-button {
-    display: block;
-    margin: 10px auto;
-    padding: 12px 25px;
-    background: #2c3e50;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s;
-    width: 100%;
-    max-width: 200px;
-  }
-  .tasbeeh-button:active {
-    transform: scale(0.95);
-  }
-
-  /* تحسين الترقيم بين الصفحات */
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  .pagination button {
-    padding: 12px 20px;
-    background: #2980b9;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s;
-  }
-  .pagination button:active {
-    transform: scale(0.95);
-  }
-
-  /* تحسين صفحة الإعدادات */
-  .settings-page {
-    margin-top: 20px;
-  }
-  .settings-action-btn-container {
-    margin-bottom: 15px;
-  }
-  .settings-action-btn {
-    padding: 15px;
-    width: 100%;
-    background: #16a085;
-    border: none;
-    color: white;
-    font-weight: bold;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: transform 0.2s;
-    text-align: right;
-    display: block;
-  }
-  .settings-action-btn:active {
-    transform: scale(0.95);
-  }
-  .dark-mode-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    margin-bottom: 15px;
-    cursor: pointer;
-  }
-  .toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 30px;
-  }
-  .toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
-  }
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-  }
-  input:checked + .slider {
-    background-color: #4CAF50;
-  }
-  input:checked + .slider:before {
-    transform: translateX(30px);
-  }
-
-  /* تحسين الروابط */
-  .contact-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-  
-  /* صفحة مواقيت الصلاة */
-  .prayer-time {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  .prayer-time:last-child {
-    border-bottom: none;
-  }
-  .prayer-name {
-    font-weight: bold;
-  }
-  .prayer-time-value {
-    color: #064420;
-  }
-  body.dark-mode .prayer-time-value {
-    color: #f1c40f;
-  }
-  .current-prayer {
-    background-color: rgba(46, 204, 113, 0.2);
-    border-radius: 5px;
-  }
-  body.dark-mode .current-prayer {
-    background-color: rgba(46, 204, 113, 0.4);
-  }
-  
-  /* صفحة القبلة */
-  .qibla-compass {
-    width: 200px;
-    height: 200px;
-    margin: 20px auto;
-    position: relative;
-    border-radius: 50%;
-    background-color: #f8f8f8;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  body.dark-mode .qibla-compass {
-    background-color: #2c3e50;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  }
-  .compass-arrow {
-    position: absolute;
-    width: 0;
-    height: 0;
-    top: 50%;
-    left: 50%;
-    transform-origin: 0 0;
-    border-left: 100px solid transparent;
-    border-right: 100px solid transparent;
-    border-bottom: 150px solid #e74c3c;
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  .compass-circle {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    top: 10px;
-    left: 10px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-  }
-  .compass-north {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: bold;
-    color: #e74c3c;
-  }
-  .compass-south {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: bold;
-  }
-  .compass-east {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    font-weight: bold;
-  }
-  .compass-west {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    font-weight: bold;
-  }
-  .qibla-info {
-    text-align: center;
-    margin-top: 20px;
-  }
-  .qibla-degree {
-    font-size: 24px;
-    font-weight: bold;
-    color: #064420;
-  }
-  body.dark-mode .qibla-degree {
-    color: #f1c40f;
-  }
-  
-  /* زر تحديث الموقع */
-  .refresh-btn {
-    display: block;
-    margin: 20px auto;
-    padding: 12px 25px;
-    background: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s;
-  }
-  .refresh-btn:active {
-    transform: scale(0.95);
-  }
-  
-  /* رسالة التحميل */
-  .loading-message {
-    text-align: center;
-    padding: 20px;
-    font-style: italic;
-    color: #7f8c8d;
-  }
-  body.dark-mode .loading-message {
-    color: #bdc3c7;
-  }
-  
-  /* رسالة الخطأ */
-  .error-message {
-    text-align: center;
-    padding: 20px;
-    color: #e74c3c;
-    font-weight: bold;
-  }
-</style>
-</head>
-<body>
-  <!-- صفحة المصادقة (تسجيل الدخول / التسجيل) -->
-  <div id="auth-container" class="auth-container">
-    <div class="auth-box" id="login-box">
-      <h1 class="auth-title">تسجيل الدخول</h1>
-      <form class="auth-form" id="login-form">
-        <input type="email" class="auth-input" id="login-email" placeholder="البريد الإلكتروني" required>
-        <input type="password" class="auth-input" id="login-password" placeholder="كلمة المرور" required>
-        <button type="submit" class="auth-button">تسجيل الدخول</button>
-      </form>
-      <p class="auth-toggle" onclick="showSignup()">ليس لديك حساب؟ سجل الآن</p>
-      <div class="auth-error" id="login-error"></div>
-    </div>
-
-    <div class="auth-box" id="signup-box" style="display: none;">
-      <h1 class="auth-title">إنشاء حساب جديد</h1>
-      <form class="auth-form" id="signup-form">
-        <input type="text" class="auth-input" id="signup-name" placeholder="الاسم الكامل" required>
-        <input type="email" class="auth-input" id="signup-email" placeholder="البريد الإلكتروني" required>
-        <input type="password" class="auth-input" id="signup-password" placeholder="كلمة المرور (6 أحرف على الأقل)" minlength="6" required>
-        <input type="password" class="auth-input" id="signup-confirm-password" placeholder="تأكيد كلمة المرور" required>
-        <button type="submit" class="auth-button">إنشاء حساب</button>
-      </form>
-      <p class="auth-toggle" onclick="showLogin()">لديك حساب بالفعل؟ سجل دخول</p>
-      <div class="auth-error" id="signup-error"></div>
-      <div class="auth-success" id="signup-success"></div>
-    </div>
-  </div>
-
-  <!-- التطبيق الرئيسي (سيتم إظهاره بعد تسجيل الدخول) -->
-  <div class="app" id="main-app">
-    <!-- الصفحة الرئيسية -->
-    <div class="page active" id="home">
-      <div class="welcome-box">
-        <h1>مرحبًا بك في تطبيق اڸــمــٶمــن</h1>
-        <p>السلام عليكم ورحمة الله وبركاته</p>
-        <p>هنا تجد زادك اليومي من الأحاديث، الأذكار، والأدعية</p>
-        <p>ارتقِ بروحك، واملأ يومك بنور الإيمان</p>
-        <p>الإصدار الحالي: v1.15.22</p>
-      </div>
-      <div class="icons-container">
-        <div class="icon yellow" onclick="showPage('hadith-page-1')">
-          <i class="fas fa-book-hadith"></i>
-          <span>أحاديث</span>
-        </div>
-        <div class="icon blue" onclick="showPage('zekr-page-1')">
-          <i class="fas fa-pray"></i>
-          <span>أذكار</span>
-        </div>
-        <div class="icon green" onclick="showPage('doaa-page-1')">
-          <i class="fas fa-hands-praying"></i>
-          <span>أدعية</span>
-        </div>
-        <div class="icon red-light" onclick="showPage('tasbeeh-page')">
-          <i class="fas fa-praying-hands"></i>
-          <span>تسبيح</span>
-        </div>
-        <div class="icon purple" onclick="showPage('prayer-times-page')">
-          <i class="fas fa-clock"></i>
-          <span>مواقيت الصلاة</span>
-        </div>
-        <div class="icon orange" onclick="showPage('qibla-page')">
-          <i class="fas fa-compass"></i>
-          <span>اتجاه القبلة</span>
-        </div>
-        <div class="icon yellow" onclick="showPage('settings-page')">
-          <i class="fas fa-cog"></i>
-          <span>إعدادات</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- صفحة الإعدادات -->
-    <div class="page" id="settings-page">
-      <div class="header">
-        <button onclick="showPage('home')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>الإعدادات</h2>
-      </div>
-      <div class="settings-page">
-        <div class="dark-mode-toggle" onclick="toggleDarkMode()">
-          <span><i class="fas fa-moon"></i> الوضع الليلي</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="darkModeToggle">
-            <span class="slider"></span>
-          </label>
-        </div>
-        
-        <div class="settings-action-btn-container">
-          <button class="settings-action-btn" onclick="showPage('privacy-policy-page')">
-            <i class="fas fa-file-contract"></i>
-            <span>شروط سياسة التطبيق</span>
-          </button>
-        </div>
-        
-        <a href="https://www.instagram.com/bot_.en?igsh=dGY1dTl2azhtdTI0" target="_blank" class="contact-link">
-          <button class="settings-action-btn">
-            <i class="fab fa-instagram"></i>
-            <span>مساعدة عبر إنستغرام</span>
-          </button>
-        </a>
-        
-        <button class="settings-action-btn" onclick="logout()" style="background: #e74c3c;">
-          <i class="fas fa-sign-out-alt"></i>
-          <span>تسجيل الخروج</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- صفحة سياسة الخصوصية -->
-    <div class="page" id="privacy-policy-page">
-      <div class="header">
-        <button onclick="showPage('settings-page')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>شروط سياسة التطبيق</h2>
-      </div>
-      <div class="content-box">
-        <h2>شروط سياسة التطبيق</h2>
-        <p>🌙 السلام عليكم ورحمة الله وبركاته 🌙</p>
-        <p>📚 اكتشف تطبيق 𝗔𝗹-𝗺𝘂𝗺𝗶𝗻 </p>
-        <p>دائمًا في حاجة لرفيق يعينك على ذكرك وعبادتك؟</p>
-        <p>مع تطبيق 𝗔𝗹-𝗺𝘂𝗺𝗶𝗻، استمتع بتجربة مميزة وشاملة تحتوي على:</p>
-        <p>🌿 أذكار وأدعية يومية</p>
-        <p>📖 أحاديث نبويّة صحيحة</p>
-        <p>🕌 محتوى إسلامي موثوق</p>
-        <p>⏰ تنبيهات تذكيرية لتسبيحك وأذكارك</p>
-        <p>🕋 مواقيت الصلاة حسب موقعك</p>
-        <p>🧭 بوصلة اتجاه القبلة</p>
-        <p>تصميم بسيط يناسب جميع الأعمار</p>
-        <p>ابدأ رحلتك الدينية مع 𝗔𝗹-𝗺𝘂𝗺𝗶𝗻 الآن!</p>
-        <p>المطور: was_iya1</p>
-      </div>
-    </div>
-
-    <!-- صفحة التسبيح -->
-    <div class="page" id="tasbeeh-page">
-      <div class="header">
-        <button onclick="showPage('home')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>عدّاد التسبيح</h2>
-      </div>
-      <div class="content-box">
-        <div class="tasbeeh-frame">
-          <p><span class="tasbeeh-word">سبحان الله</span> <i class="fas fa-praying-hands"></i></p>
-          <div id="tasbeehCount">0</div>
-          <button class="tasbeeh-button" onclick="incrementTasbeeh()">
-            <i class="fas fa-plus"></i>
-            <span>تسبيح</span>
-          </button>
-          <button class="tasbeeh-button" onclick="resetTasbeeh()">
-            <i class="fas fa-redo"></i>
-            <span>إعادة احتساب</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- صفحات الأحاديث -->
-    <div class="page" id="hadith-page-1">
-      <div class="header">
-        <button onclick="showPage('home')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>الأحيث النبوية</h2>
-      </div>
-      <div class="content-box">
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى، فمن كانت هجرته إلى الله ورسوله فهجرته إلى الله ورسوله، ومن كانت هجرته لدنيا يصيبها أو امرأة ينكحها، فهجرته إلى ما هاجر إليه"</p>
-          <p class="hadith-reference">المصدر: صحيح البخاري</p>
-        </div>
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-كُتب على ابن آدم نصيبه من الزنا، مدركٌ ذلك لا محالة؛ فالعينان زناهما النظر، والأذنان زناهما الاستماع، واللسان زناه الكلام، واليد زناها البطش، والرجل زناها المشي، والقلب يهوى ويتمنى، ويصدق ذلك الفرج أو يكذبه"</p>
-          <p class="hadith-reference">المصدر: صحيح الترمذي (195)</p>
-        </div>
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-من لعب بالنردشير فكأنما صبغ يده في لحم خنزير ودمه"</p>
-          <p class="hadith-reference">المصدر: صحيح الترمذي (195)</p>
-        </div>
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-يا معشر من آمن بلسانه ولم يدخل الإيمان قلبه، لا تغتابوا المسلمين، ولا تتبعوا عوراتهم؛ فإنه من تتبع عورة أخيه المسلم تتبع الله عورته، ومن تتبع الله عورته يفضحه ولو في جوف رحله"</p>
-          <p class="hadith-reference">المصدر: صحيح الترمذي (195)</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن تميم الداري رضي الله عنه قال: "الدين النصيحة."</p>
-          <p class="hadith-reference">المصدر: صحيح مسلم</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('hadith-page-2')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="hadith-page-2">
-      <div class="header">
-        <button onclick="showPage('hadith-page-1')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>الأحاديث النبوية</h2>
-      </div>
-      <div class="content-box">
-        <div class="hadith-frame">
-          <p>عن أنس بن مالك رضي الله عنه قال: "اطلبوا العلم من المهد إلى اللحد."</p>
-          <p class="hadith-reference">المصدر: حديث حسن، رواه ابن عبد البر في "جامع بيان العلم وفضله"</p>
-        </div>
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-ما من عبد مسلم يدعو لأخيه بظهر الغيب إلا قال الملك: ولك بمثل"</p>
-          <p class="hadith-reference">المصدر: صحيح الترمذي (195)</p>
-        </div>
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-الراحمون يرحمهم الرحمن، ارحموا من في الأرض يرحمكم من في السماء"</p>
-          <p class="hadith-reference">المصدر: صحيح الترمذي (195)</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن عبد الله بن عمر رضي الله عنه قال: "من لا يُؤثِر الناس لا يُؤثِره الله."</p>
-          <p class="hadith-reference">المصدر: صحيح البخاري</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن عثمان بن عفان رضي الله عنه قال: "خيركم من تعلم القرآن وعلمه."</p>
-          <p class="hadith-reference">المصدر: صحيح البخاري</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('hadith-page-3')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="hadith-page-3">
-      <div class="header">
-        <button onclick="showPage('hadith-page-2')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>الأحاديث النبوية</h2>
-      </div>
-      <div class="content-box">
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-"إن الله لا ينظر إلى صوركم وأموالكم، ولكن ينظر إلى قلوبكم وأعمالكم"</p>
-          <p class="hadith-reference">المصدر: صحيح مسلم</p>
-        </div>
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-"إن الله كتب الإحسان على كل شيء، فإذا قتلتم فأحسنوا القتلة، وإذا ذبحتم فأحسنوا الذِّبحة، وليحد أحدكم شفرته وليرح ذبيحته"</p>
-          <p class="hadith-reference">المصدر: صحيح الترمذي (195)</p>
-        </div>
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-يسِّروا ولا تعسِّروا، وبشِّروا ولا تنفِّروا."</p>
-          <p class="hadith-reference">المصدر: صحيح الترمذي (195)</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن أبي هريرة رضي الله عنه قال: "من صام رمضان إيمانًا واحتسابًا غفر له ما تقدم من ذنبه."</p>
-          <p class="hadith-reference">المصدر: صحيح البخاري</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن أنس بن مالك رضي الله عنه قال: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه."</p>
-          <p class="hadith-reference">المصدر: صحيح البخاري</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('hadith-page-4')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="hadith-page-4">
-      <div class="header">
-        <button onclick="showPage('hadith-page-3')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>الأحاديث النبوية</h2>
-      </div>
-      <div class="content-box">
-        <div class="hadith-frame">
-          <p>عن عبد الله بن مسعود رضي الله عنه قال: "اللهم إني أعوذ بك من علم لا ينفع."</p>
-          <p class="hadith-reference">المصدر: صحيح مسلم</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن أبي هريرة رضي الله عنه قال: "من سلك طريقًا يلتمس فيه علمًا سهل الله له به طريقًا إلى الجنة."</p>
-          <p class="hadith-reference">المصدر: صحيح مسلم</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن عبد الله بن مسعود رضي الله عنه قال: "من لا يشكر الناس لا يشكر الله."</p>
-          <p class="hadith-reference">المصدر: صحيح الترمذي (195)</p>
-        </div>
-        <div class="hadith-frame">
-          <p>"قال رسول الله صلى الله عليه وسلم:
-من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت، ومن كان يؤمن بالله واليوم الآخر فليكرم جاره، ومن كان يؤمن بالله واليوم الآخر فليكرم ضيفه"</p>
-          <p class="hadith-reference">المصدر: صحيح المسلم</p>
-        </div>
-        <div class="hadith-frame">
-          <p>عن أبي هريرة رضي الله عنه قال: "الطهور شطر الإيمان."</p>
-          <p class="hadith-reference">المصدر: صحيح مسلم</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('hadith-page-1')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- صفحات الأذكار -->
-    <div class="page" id="zekr-page-1">
-      <div class="header">
-        <button onclick="showPage('home')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>أذكار الصباح والمساء</h2>
-      </div>
-      <div class="content-box">
-        <div class="zekr-frame">
-          <p>"اللهم إني أصبحت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك أنك أنت الله لا إله إلا أنت وحدك لا شريك لك، وأن محمدًا عبدك ورسولك.تقال أربع مرات"</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"رضيت بالله ربًا، وبالإسلام دينًا، وبمحمد صلى الله عليه وسلم نبيًا"</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"سبحان الله عدد ما خلق في السماء، سبحان الله عدد ما خلق في الأرض، سبحان الله عدد ما بينهما."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي، فاغفر لي، فإنه لا يغفر الذنوب إلا أنت"</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم إني أعوذ بك من شر ما عملت ومن شر ما لم أعمل."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"لا حول ولا قوة إلا بالله."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('zekr-page-2')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="zekr-page-2">
-      <div class="header">
-        <button onclick="showPage('zekr-page-1')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>أذكار الصباح والمساء</h2>
-      </div>
-      <div class="content-box">
-        <div class="zekr-frame">
-          <p>"اللهم إني أعوذ بك من علم لا ينفع، وقلب لا يخشع، ودعاء لا يُستجاب."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"سبحان الله عدد ما خلق في السماء، سبحان الله عدد ما خلق في الأرض، سبحان الله عدد ما بينهما."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"سبحان الله عدد ما خلق في السماء، سبحان الله عدد ما خلق في الأرض، سبحان الله عدد ما بينهما."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك المصير."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم اجعلنا من الذين يسيرون على صراطك المستقيم."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('zekr-page-3')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="zekr-page-3">
-      <div class="header">
-        <button onclick="showPage('zekr-page-2')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>أذكار الصباح والمساء</h2>
-      </div>
-      <div class="content-box">
-        <div class="zekr-frame">
-          <p>"سبحان الله وبحمده، سبحان الله العظيم."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم إني أسالك من فضلك ورحمتك."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم بك أصبحنا، وبك أمسينا، وبك نحيا، وبك نموت، وإليك النشور"</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"سبحان الله عدد ما خلق في السماء، سبحان الله عدد ما خلق في الأرض، سبحان الله عدد ما بينهما."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('zekr-page-4')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="zekr-page-4">
-      <div class="header">
-        <button onclick="showPage('zekr-page-3')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>أذكار الصباح والمساء</h2>
-      </div>
-      <div class="content-box">
-        <div class="zekr-frame">
-          <p>"لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"اللهم صل وسلم على نبينا محمد."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"سبحان الله عدد ما خلق في السماء، سبحان الله عدد ما خلق في الأرض، سبحان الله عدد ما بينهما."</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير. رب أسألك خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر ما في هذا اليوم وشر ما بعده"</p>
-        </div>
-        <div class="zekr-frame">
-          <p>"ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('zekr-page-1')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- صفحات الأدعية -->
-    <div class="page" id="doaa-page-1">
-      <div class="header">
-        <button onclick="showPage('home')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>أدعية منوعة</h2>
-      </div>
-      <div class="content-box">
-        <div class="doaa-frame">
-          <h3>دعاء للهدى:</h3>
-          <p>"اللهم إني أسالك الهُدى والتُقى والعفاف والغنى."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء ثبات وهذاية:</h3>
-          <p>"اللهم يا مقلب القلوب ثبت قلبي على دينك، اللهم اجعل قلبي مطمئنًا بذكرك."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء للهدى:</h3>
-          <p>"اللهم إني أسالك الهُدى والتُقى والعفاف والغنى."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء لتفريج الهموم:</h3>
-          <p>"اللهم إني عبدك ابن عبدك، ناصيتي بيدك، ماضٍ في حكمك، عدلٌ في قضاؤك، أسالك بكل اسم هو لك سميت به نفسك أو علمته أحدًا من خلقك أو أنزلته في كتابك أو استأثرت به في علم الغيب عندك، أن تجعل القرآن ربيع قلبي، ونور صدري، وجلاء حزني، وذهاب همي."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء التوفيق:</h3>
-          <p>"اللهم إني أسالك أن توفقني لما تحب وترضى، وأن تجعلني من أهل الجنة."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('doaa-page-2')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="doaa-page-2">
-      <div class="header">
-        <button onclick="showPage('doaa-page-1')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>أدعية منوعة</h2>
-      </div>
-      <div class="content-box">
-        <div class="doaa-frame">
-          <h3>دعاء الاستغفار:</h3>
-          <p>"اللهم اغفر لي ولأمي ولأبي ولمن له حق علي، ولأهل بيتي، ولأصدقائي، ولمن تحب."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء قيام اليل:</h3>
-          <p>"اللهم إنك عفو تحب العفو فاعفُ عني، واغفر لي وارحمني برحمتك يا أرحم الراحمين."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء بر الوالدين:</h3>
-          <p>"اللهم اغفر لي ولوالديّ، وارحمهما كما ربياني صغيرًا، وارضَ عنهما رضا لا يُسخط بعده أبدًا."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء الرغبة في العلم:</h3>
-          <p>"اللهم انفعني بما علمتني، وعلمني ما ينفعني، وزدني علمًا."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء قبل النوم:</h3>
-          <p>"اللهم قني عذابك يوم تبعث عبادك."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('doaa-page-3')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="doaa-page-3">
-      <div class="header">
-        <button onclick="showPage('doaa-page-2')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>أدعية منوعة</h2>
-      </div>
-      <div class="content-box">
-        <div class="doaa-frame">
-          <h3>دعاء للبركة في الوقت:</h3>
-          <p>"اللهم بارك لي في وقتي، ووفقني لما تحب وترضى."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء الخوف:</h3>
-          <p>"اللهم إني أعوذ بك من الخوف إلا منك، ومن الذل إلا لك، ومن الفقر إلا إليك، وأعوذ بك من أن أضل أو أُضل"</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء الإستغفار:</h3>
-          <p>"اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي، فاغفر لي، فإنه لا يغفر الذنوب إلا أنت"</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء الرزق:</h3>
-          <p>"اللهم إني أسالك رزقًا طيبًا وعملاً متقبلًا."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء للوالدين:</h3>
-          <p>"رب اغفر لي ولوالدَيَّ ولمن دخل بيتي مؤمنًا وللمؤمنين والمؤمنات."</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('doaa-page-4')">
-          <span>التالي</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="page" id="doaa-page-4">
-      <div class="header">
-        <button onclick="showPage('doaa-page-3')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>أدعية منوعة</h2>
-      </div>
-      <div class="content-box">
-        <div class="doaa-frame">
-          <h3>دعاء للشفاء:</h3>
-          <p>"اللهم رب الناس، مذهب البأس، اشفِ أنت الشافي، لا شفاء إلا شفاؤك، شفاء لا يغادر سقما."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء تفريج الكرب:</h3>
-          <p>"اللهم إني أعوذ بك من الهم والحزن، والعجز والكسل، والجبن والبخل، وغلبة الدين وقهر الرجال"</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء التيسير:</h3>
-          <p>"اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً، فسهّل لي أمري وبارك لي فيه."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء للزواج:</h3>
-          <p>"اللهم ارزقني زوجًا صالحًا يعينني على دينك ودنياي."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء للنجاح:</h3>
-          <p>"اللهم سهل لي أمرًا وأعني عليه برحمتك."</p>
-        </div>
-        <div class="doaa-frame">
-          <h3>دعاء مغفرة و التوبة:</h3>
-          <p>"اللهم اغفر لي ذنبي كله، دقه وجله، أوله وآخره، علانيته وسره"</p>
-        </div>
-      </div>
-      <div class="pagination">
-        <button onclick="showPage('doaa-page-1')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- صفحة مواقيت الصلاة -->
-    <div class="page" id="prayer-times-page">
-      <div class="header">
-        <button onclick="showPage('home')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>مواقيت الصلاة</h2>
-      </div>
-      <div class="content-box">
-        <div class="prayer-times-frame">
-          <div id="location-info">
-            <p id="loading-message" class="loading-message">جاري تحميل بيانات الموقع ومواقيت الصلاة...</p>
-            <p id="error-message" class="error-message" style="display:none;"></p>
-          </div>
-          <div id="prayer-times-container" style="display:none;">
-            <div class="prayer-time" id="fajr-time">
-              <span class="prayer-name">الفجر</span>
-              <span class="prayer-time-value" id="fajr-value"></span>
-            </div>
-            <div class="p prayer-time" id="sunrise-time">
-              <span class="prayer-name">الشروق</span>
-              <span class="prayer-time-value" id="sunrise-value"></span>
-            </div>
-            <div class="prayer-time" id="dhuhr-time">
-              <span class="prayer-name">الظهر</span>
-              <span class="prayer-time-value" id="dhuhr-value"></span>
-            </div>
-            <div class="prayer-time" id="asr-time">
-              <span class="prayer-name">العصر</span>
-              <span class="prayer-time-value" id="asr-value"></span>
-            </div>
-            <div class="prayer-time" id="maghrib-time">
-              <span class="prayer-name">المغرب</span>
-              <span class="prayer-time-value" id="maghrib-value"></span>
-            </div>
-            <div class="prayer-time" id="isha-time">
-              <span class="prayer-name">العشاء</span>
-              <span class="prayer-time-value" id="isha-value"></span>
-            </div>
-            <div id="current-time">
-              <p>التاريخ الهجري: <span id="hijri-date"></span></p>
-              <p>الوقت الحالي: <span id="current-time-value"></span></p>
-              <p>الصلاة القادمة: <span id="next-prayer"></span></p>
-            </div>
-          </div>
-          <button class="refresh-btn" onclick="getPrayerTimes()">
-            <i class="fas fa-sync-alt"></i>
-            <span>تحديث الموقع</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- صفحة اتجاه القبلة -->
-    <div class="page" id="qibla-page">
-      <div class="header">
-        <button onclick="showPage('home')">
-          <i class="fas fa-arrow-right"></i>
-          <span>رجوع</span>
-        </button>
-        <h2>اتجاه القبلة</h2>
-      </div>
-      <div class="content-box">
-        <div class="qibla-frame">
-          <div id="qibla-loading" class="loading-message">
-            <p>جاري تحديد موقعك وحساب اتجاه القبلة...</p>
-          </div>
-          <div id="qibla-content" style="display:none;">
-            <div class="qibla-compass">
-              <div class="compass-circle"></div>
-              <div class="compass-arrow" id="compass-arrow"></div>
-              <div class="compass-north">N</div>
-              <div class="compass-south">S</div>
-              <div class="compass-east">E</div>
-              <div class="compass-west">W</div>
-            </div>
-            <div class="qibla-info">
-              <p>اتجاه القبلة بالنسبة لك هو:</p>
-              <p class="qibla-degree" id="qibla-degree">0°</p>
-              <p id="qibla-location"></p>
-            </div>
-          </div>
-          <div id="qibla-error" class="error-message" style="display:none;"></div>
-          <button class="refresh-btn" onclick="initQibla()">
-            <i class="fas fa-sync-alt"></i>
-            <span>تحديث الاتجاه</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // نظام المصادقة
-    let currentUser = null;
-    
-    // التحقق من وجود مستخدم مسجل الدخول
-    document.addEventListener('DOMContentLoaded', function() {
-      // تحميل الوضع الليلي من التخزين المحلي
-      if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('darkModeToggle').checked = true;
-      }
-      
-      // التحقق من وجود مستخدم مسجل الدخول
-      const savedUser = localStorage.getItem('currentUser');
-      if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        showApp();
-      }
-      
-      // إعداد معالجات الأحداث للنماذج
-      document.getElementById('login-form').addEventListener('submit', handleLogin);
-      document.getElementById('signup-form').addEventListener('submit', handleSignup);
-    });
-    
-    // عرض نموذج التسجيل
-    function showSignup() {
-      document.getElementById('login-box').style.display = 'none';
-      document.getElementById('signup-box').style.display = 'block';
-      document.getElementById('signup-error').textContent = '';
-      document.getElementById('signup-success').textContent = '';
-    }
-    
-    // عرض نموذج تسجيل الدخول
-    function showLogin() {
-      document.getElementById('signup-box').style.display = 'none';
-      document.getElementById('login-box').style.display = 'block';
-      document.getElementById('login-error').textContent = '';
-    }
-    
-    // معالجة تسجيل الدخول
-    function handleLogin(e) {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-      
-      // التحقق من صحة بيانات المستخدم
-      const users = JSON.parse(localStorage.getItem('users')) || [];
-      const user = users.find(u => u.email === email && u.password === password);
-      
-      if (user) {
-        currentUser = {
-          name: user.name,
-          email: user.email
-        };
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        showApp();
-      } else {
-        document.getElementById('login-error').textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
-      }
-    }
-    
-    // معالجة إنشاء حساب جديد
-    function handleSignup(e) {
-      e.preventDefault();
-      const name = document.getElementById('signup-name').value;
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
-      const confirmPassword = document.getElementById('signup-confirm-password').value;
-      
-      // التحقق من تطابق كلمتي المرور
-      if (password !== confirmPassword) {
-        document.getElementById('signup-error').textContent = 'كلمتا المرور غير متطابقتين';
-        return;
-      }
-      
-      // التحقق من طول كلمة المرور
-      if (password.length < 6) {
-        document.getElementById('signup-error').textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-        return;
-      }
-      
-      // التحقق من عدم وجود حساب بنفس البريد الإلكتروني
-      const users = JSON.parse(localStorage.getItem('users')) || [];
-      const existingUser = users.find(u => u.email === email);
-      
-      if (existingUser) {
-        document.getElementById('signup-error').textContent = 'هذا البريد الإلكتروني مسجل بالفعل';
-      } else {
-        // إنشاء حساب جديد
-        const newUser = { name, email, password };
-        users.push(newUser);
-        localStorage.setItem('users', JSON.stringify(users));
-        
-        // تسجيل الدخول تلقائياً
-        currentUser = {
-          name: newUser.name,
-          email: newUser.email
-        };
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        
-        // عرض رسالة نجاح
-        document.getElementById('signup-success').textContent = 'تم إنشاء الحساب بنجاح! يتم تسجيل الدخول...';
-        
-        // الانتقال إلى التطبيق بعد ثانيتين
-        setTimeout(showApp, 2000);
-      }
-    }
-    
-    // عرض التطبيق بعد تسجيل الدخول
-    function showApp() {
-      document.getElementById('auth-container').style.display = 'none';
-      document.getElementById('main-app').style.display = 'flex';
-      document.getElementById('home').classList.add('active');
-    }
-    
-    // تسجيل الخروج
-    function logout() {
-      currentUser = null;
-      localStorage.removeItem('currentUser');
-      document.getElementById('main-app').style.display = 'none';
-      document.getElementById('auth-container').style.display = 'flex';
-      document.getElementById('login-box').style.display = 'block';
-      document.getElementById('signup-box').style.display = 'none';
-      document.getElementById('login-email').value = '';
-      document.getElementById('login-password').value = '';
-      document.getElementById('login-error').textContent = '';
-    }
-    
-    // وظيفة عرض الصفحات
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-      document.getElementById(pageId).classList.add('active');
-      
-      // إذا كانت صفحة مواقيت الصلاة، جلب البيانات عند فتحها
-      if (pageId === 'prayer-times-page') {
-        getPrayerTimes();
-      }
-      
-      // إذا كانت صفحة القبلة، تهيئة البوصلة عند فتحها
-      if (pageId === 'qibla-page') {
-        initQibla();
-      }
-    }
-
-    // عدّاد التسبيح
-    let tasbeehCount = 0;
-    function incrementTasbeeh() {
-      tasbeehCount++;
-      document.getElementById('tasbeehCount').innerText = tasbeehCount;
-    }
-    function resetTasbeeh() {
-      tasbeehCount = 0;
-      document.getElementById('tasbeehCount').innerText = tasbeehCount;
-    }
-
-    // الوضع الليلي
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-    }
-    
-    // مواقيت الصلاة
-    function getPrayerTimes() {
-      const loadingMessage = document.getElementById('loading-message');
-      const errorMessage = document.getElementById('error-message');
-      const prayerTimesContainer = document.getElementById('prayer-times-container');
-      
-      loadingMessage.style.display = 'block';
-      errorMessage.style.display = 'none';
-      prayerTimesContainer.style.display = 'none';
-      
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            
-            // استخدام API لحساب مواقيت الصلاة
-            fetch(`https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=2`)
-              .then(response => response.json())
-              .then(data => {
-                if (data.code === 200) {
-                  const timings = data.data.timings;
-                  const date = data.data.date;
-                  
-                  // عرض مواقيت الصلاة
-                  document.getElementById('fajr-value').textContent = timings.Fajr;
-                  document.getElementById('sunrise-value').textContent = timings.Sunrise;
-                  document.getElementById('dhuhr-value').textContent = timings.Dhuhr;
-                  document.getElementById('asr-value').textContent = timings.Asr;
-                  document.getElementById('maghrib-value').textContent = timings.Maghrib;
-                  document.getElementById('isha-value').textContent = timings.Isha;
-                  
-                  // التاريخ الهجري
-                  const hijriDate = date.hijri;
-                  document.getElementById('hijri-date').textContent = `${hijriDate.day} ${hijriDate.month.ar} ${hijriDate.year}هـ`;
-                  
-                  // الوقت الحالي
-                  updateCurrentTime();
-                  setInterval(updateCurrentTime, 1000);
-                  
-                  // تحديد الصلاة الحالية
-                  highlightCurrentPrayer(timings);
-                  
-                  loadingMessage.style.display = 'none';
-                  prayerTimesContainer.style.display = 'block';
-                  
-                  // جلب اسم المدينة
-                  fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=ar`)
-                    .then(response => response.json())
-                    .then(locationData => {
-                      const city = locationData.locality || 'موقعك الحالي';
-                      document.getElementById('location-info').insertAdjacentHTML('afterbegin', `<p>${city}</p>`);
-                    });
-                } else {
-                  throw new Error('فشل في جلب مواقيت الصلاة');
-                }
-              })
-              .catch(error => {
-                loadingMessage.style.display = 'none';
-                errorMessage.textContent = 'حدث خطأ في جلب مواقيت الصلاة: ' + error.message;
-                errorMessage.style.display = 'block';
-              });
-          },
-          error => {
-            loadingMessage.style.display = 'none';
-            let errorMsg = '';
-            switch(error.code) {
-              case error.PERMISSION_DENIED:
-                errorMsg = 'تم رفض طلب الحصول على الموقع. يرجى تمكين صلاحيات الموقع.';
-                break;
-              case error.POSITION_UNAVAILABLE:
-                errorMsg = 'معلومات الموقع غير متوفرة.';
-                break;
-              case error.TIMEOUT:
-                errorMsg = 'انتهى الوقت المحدد لطلب الموقع.';
-                break;
-              default:
-                errorMsg = 'حدث خطأ غير معروف أثناء محاولة الحصول على الموقع.';
-            }
-            errorMessage.textContent = errorMsg;
-            errorMessage.style.display = 'block';
-          }
-        );
-      } else {
-        loadingMessage.style.display = 'none';
-        errorMessage.textContent = 'المتصفح لا يدعم خدمة الموقع الجغرافي.';
-        errorMessage.style.display = 'block';
-      }
-    }
-    
-    function updateCurrentTime() {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      document.getElementById('current-time-value').textContent = `${hours}:${minutes}:${seconds}`;
-    }
-    
-    function highlightCurrentPrayer(timings) {
-      // إزالة التمييز عن جميع الأوقات
-      document.querySelectorAll('.prayer-time').forEach(el => {
-        el.classList.remove('current-prayer');
-      });
-      
-      const now = new Date();
-      const currentHours = now.getHours();
-      const currentMinutes = now.getMinutes();
-      
-      // تحويل أوقات الصلاة إلى دقائق من اليوم لتسهيل المقارنة
-      const prayerTimes = [
-        { name: 'Fajr', time: timings.Fajr },
-        { name: 'Sunrise', time: timings.Sunrise },
-        { name: 'Dhuhr', time: timings.Dhuhr },
-        { name: 'Asr', time: timings.Asr },
-        { name: 'Maghrib', time: timings.Maghrib },
-        { name: 'Isha', time: timings.Isha }
-      ];
-      
-      // تحويل الوقت الحالي إلى دقائق من اليوم
-      const currentTotalMinutes = currentHours * 60 + currentMinutes;
-      
-      // تحويل أوقات الصلاة إلى دقائق من اليوم
-      const prayerMinutes = prayerTimes.map(prayer => {
-        const [hours, minutes] = prayer.time.split(':').map(Number);
-        return {
-          name: prayer.name,
-          totalMinutes: hours * 60 + minutes
-        };
-      });
-      
-      // تحديد الصلاة الحالية أو القادمة
-      let currentPrayer = null;
-      let nextPrayer = null;
-      
-      for (let i = 0; i < prayerMinutes.length; i++) {
-        if (currentTotalMinutes < prayerMinutes[i].totalMinutes) {
-          nextPrayer = prayerMinutes[i];
-          if (i > 0) {
-            currentPrayer = prayerMinutes[i - 1];
-          }
-          break;
-        }
-      }
-      
-      // إذا كان الوقت بعد العشاء وقبل الفجر
-      if (!nextPrayer && prayerMinutes.length > 0) {
-        nextPrayer = prayerMinutes[0]; // الفجر هو الصلاة القادمة
-        currentPrayer = prayerMinutes[prayerMinutes.length - 1]; // العشاء هي الصلاة الحالية
-      }
-      
-      // تمييز الصلاة الحالية إذا وجدت
-      if (currentPrayer) {
-        document.getElementById(`${currentPrayer.name.toLowerCase()}-time`).classList.add('current-prayer');
-      }
-      
-      // عرض الصلاة القادمة
-      if (nextPrayer) {
-        const prayerNames = {
-          'Fajr': 'الفجر',
-          'Sunrise': 'الشروق',
-          'Dhuhr': 'الظهر',
-          'Asr': 'العصر',
-          'Maghrib': 'المغرب',
-          'Isha': 'العشاء'
-        };
-        document.getElementById('next-prayer').textContent = `${prayerNames[nextPrayer.name]} (${timings[nextPrayer.name]})`;
-      }
-    }
-    
-    // اتجاه القبلة
-    function initQibla() {
-      const qiblaLoading = document.getElementById('qibla-loading');
-      const qiblaContent = document.getElementById('qibla-content');
-      const qiblaError = document.getElementById('qibla-error');
-      
-      qiblaLoading.style.display = 'block';
-      qiblaContent.style.display = 'none';
-      qiblaError.style.display = 'none';
-      
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            
-            // حساب اتجاه القبلة (الكعبة)
-            const kaabaLat = 21.422487; // خط عرض الكعبة
-            const kaabaLong = 39.826206; // خط طول الكعبة
-            
-            // حساب اتجاه القبلة بالدرجات
-            const phiK = kaabaLat * Math.PI / 180.0;
-            const lambdaK = kaabaLong * Math.PI / 180.0;
-            const phi = latitude * Math.PI / 180.0;
-            const lambda = longitude * Math.PI / 180.0;
-            
-            const psi = 180.0 / Math.PI * Math.atan2(
-              Math.sin(lambdaK - lambda),
-              Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda)
-            );
-            
-            const qiblaDirection = (psi + 360.0) % 360.0;
-            
-            // تحديث البوصلة
-            updateCompass(qiblaDirection);
-            
-            // عرض معلومات القبلة
-            document.getElementById('qibla-degree').textContent = `${Math.round(qiblaDirection)}°`;
-            
-            // جلب اسم المدينة
-            fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=ar`)
-              .then(response => response.json())
-              .then(locationData => {
-                const city = locationData.locality || 'موقعك الحالي';
-                document.getElementById('qibla-location').textContent = `موقعك: ${city}`;
-              });
-            
-            qiblaLoading.style.display = 'none';
-            qiblaContent.style.display = 'block';
-            
-            // إذا كان الجهاز يدعم حساس البوصلة، متابعة الاتجاه
-            if (window.DeviceOrientationEvent) {
-              window.addEventListener('deviceorientation', function(event) {
-                if (event.absolute && event.alpha !== null) {
-                  const compassHeading = event.alpha; // درجة الشمال بالنسبة للجهاز
-                  const qiblaHeading = (360 - compassHeading + qiblaDirection) % 360;
-                  updateCompass(qiblaHeading);
-                }
-              }, true);
-            }
-          },
-          error => {
-            qiblaLoading.style.display = 'none';
-            let errorMsg = '';
-            switch(error.code) {
-              case error.PERMISSION_DENIED:
-                errorMsg = 'تم رفض طلب الحصول على الموقع. يرجى تمكين صلاحيات الموقع.';
-                break;
-              case error.POSITION_UNAVAILABLE:
-                errorMsg = 'معلومات الموقع غير متوفرة.';
-                break;
-              case error.TIMEOUT:
-                errorMsg = 'انتهى الوقت المحدد لطلب الموقع.';
-                break;
-              default:
-                errorMsg = 'حدث خطأ غير معروف أثناء محاولة الحصول على الموقع.';
-            }
-            qiblaError.textContent = errorMsg;
-            qiblaError.style.display = 'block';
-          }
-        );
-      } else {
-        qiblaLoading.style.display = 'none';
-        qiblaError.textContent = 'المتصفح لا يدعم خدمة الموقع الجغرافي.';
-        qiblaError.style.display = 'block';
-      }
-    }
-    
-    function updateCompass(degrees) {
-      const arrow = document.getElementById('compass-arrow');
-      arrow.style.transform = `translate(-50%, -50%) rotate(${degrees}deg)`;
-      document.getElementById('qibla-degree').textContent = `${Math.round(degrees)}°`;
-    }
-  </script>
-</body>
-</html>
